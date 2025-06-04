@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.build/
+.next/
+.flutter-plugins
+.dart_tool/
+.DS_Store
