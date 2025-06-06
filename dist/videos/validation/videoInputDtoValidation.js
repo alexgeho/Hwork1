@@ -18,8 +18,8 @@ const videoInputDtoValidation = (data) => {
         data.title.trim().length < 1 ||
         data.title.trim().length > 40) {
         errors.push({
-            field: 'title',
-            message: 'Title must be between 1 and 40 characters',
+            message: 'Any<String>',
+            field: 'title'
         });
     }
     if (!data.author ||
@@ -27,8 +27,8 @@ const videoInputDtoValidation = (data) => {
         data.author.trim().length < 1 ||
         data.author.trim().length > 20) {
         errors.push({
-            field: 'author',
-            message: 'Author must be between 1 and 20 characters',
+            message: 'Any<String>',
+            field: 'author'
         });
     }
     if (data.availableResolutions) {
