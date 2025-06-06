@@ -87,13 +87,12 @@ const newVideo: Video = {
     video.availableResolutions = req.body.availableResolutions;
     video.canBeDownloaded = req.body.canBeDownloaded;
     video.minAgeRestriction = req.body.minAgeRestriction;
+    video.createdAt = req.body.createdAt;
     video.publicationDate = req.body.publicationDate;
 
     res.sendStatus(HttpStatus.NoContent);
   })
 
-
-  
   .delete('/:id', (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     const index = db.videos.findIndex((v) => v.id === id);

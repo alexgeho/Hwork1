@@ -25,8 +25,9 @@ export const videoInputDtoValidation = (
     data.title.trim().length > 40
   ) {
     errors.push({
-      field: 'title',
-      message: 'Title must be between 1 and 40 characters',
+      message: 'Any<String>',
+      field: 'title'
+      
     });
   }
 
