@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.videosRouter = void 0;
 const express_1 = require("express");
 const videoInputDtoValidation_1 = require("../validation/videoInputDtoValidation");
+const videoInputDtoValidationId_1 = require("../validation/videoInputDtoValidationId");
 const http_statuses_1 = require("../../core/types/http-statuses");
 const error_utils_1 = require("../../core/utils/error.utils");
 const in_memory_db_1 = require("../../db/in-memory.db");
@@ -55,7 +56,7 @@ exports.videosRouter
             .send((0, error_utils_1.createErrorMessages)([{ field: 'id', message: 'Video not found' }]));
         return;
     }
-    const errors = (0, videoInputDtoValidation_1.videoInputDtoValidation)(req.body);
+    const errors = (0, videoInputDtoValidationId_1.videoInputDtoValidationId)(req.body);
     if (errors.length > 0) {
         res.status(http_statuses_1.HttpStatus.BadRequest).send((0, error_utils_1.createErrorMessages)(errors));
         return;

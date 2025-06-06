@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.videoInputDtoValidation = void 0;
+exports.videoInputDtoValidationId = void 0;
 const ALLOWED_RESOLUTIONS = [
     'P144',
     'P240',
@@ -11,7 +11,7 @@ const ALLOWED_RESOLUTIONS = [
     'P1440',
     'P2160',
 ];
-const videoInputDtoValidation = (data) => {
+const videoInputDtoValidationId = (data) => {
     const errors = [];
     if (!data.title ||
         typeof data.title !== 'string' ||
@@ -50,6 +50,30 @@ const videoInputDtoValidation = (data) => {
             }
         }
     }
+    if (data.canBeDownloaded !== undefined &&
+        typeof data.canBeDownloaded !== 'boolean') {
+        errors.push({ field: 'canBeDownloaded', message: 'Must be a boolean' });
+    }
+    if (data.minAgeRestriction !== undefined && data.minAgeRestriction !== null) {
+        if (typeof data.minAgeRestriction !== 'number' ||
+            data.minAgeRestriction < 0 ||
+            data.minAgeRestriction > 18) {
+            errors.push({
+                field: 'minAgeRestriction',
+                message: 'Must be null or between 0 and 18',
+            });
+        }
+    }
+    if (data.publicationDate !== undefined) {
+        const isoRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
+        if (typeof data.publicationDate !== 'string' ||
+            !isoRegex.test(data.publicationDate)) {
+            errors.push({
+                field: 'publicationDate',
+                message: 'Must be a valid ISO date string',
+            });
+        }
+    }
     return errors;
 };
-exports.videoInputDtoValidation = videoInputDtoValidation;
+exports.videoInputDtoValidationId = videoInputDtoValidationId;

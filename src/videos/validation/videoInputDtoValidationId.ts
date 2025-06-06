@@ -1,6 +1,7 @@
-import { videoInputDto } from '../dto/video.input-dto';
 import { Resolution } from '../types/video';
 import { ValidationError } from '../types/validationError';
+import { videoInputDtoId } from '../dto/video.input-dtoId';
+
 
 
 const ALLOWED_RESOLUTIONS: Resolution[] = [
@@ -14,10 +15,12 @@ const ALLOWED_RESOLUTIONS: Resolution[] = [
   'P2160',
 ];
 
-export const videoInputDtoValidation = (
-  data: videoInputDto,
+
+export const videoInputDtoValidationId = (
+  data: videoInputDtoId,
 ): ValidationError[] => {
   const errors: ValidationError[] = [];
+
 
   if (
     !data.title ||
@@ -63,6 +66,39 @@ export const videoInputDtoValidation = (
     }
   }
 
+
+  if (
+    data.canBeDownloaded !== undefined &&
+    typeof data.canBeDownloaded !== 'boolean'
+  ) {
+    errors.push({ field: 'canBeDownloaded', message: 'Must be a boolean' });
+  }
+
+  if (data.minAgeRestriction !== undefined && data.minAgeRestriction !== null) {
+    if (
+      typeof data.minAgeRestriction !== 'number' ||
+      data.minAgeRestriction < 0 ||
+      data.minAgeRestriction > 18
+    ) {
+      errors.push({
+        field: 'minAgeRestriction',
+        message: 'Must be null or between 0 and 18',
+      });
+    }
+  }
+
+  if (data.publicationDate !== undefined) {
+    const isoRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
+    if (
+      typeof data.publicationDate !== 'string' ||
+      !isoRegex.test(data.publicationDate)
+    ) {
+      errors.push({
+        field: 'publicationDate',
+        message: 'Must be a valid ISO date string',
+      });
+    }
+  }
 
   return errors;
 };

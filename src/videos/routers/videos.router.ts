@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 
 import { videoInputDtoValidation } from '../validation/videoInputDtoValidation';
+import { videoInputDtoValidationId } from '../validation/videoInputDtoValidationId';
 import { HttpStatus } from '../../core/types/http-statuses';
 import { createErrorMessages } from '../../core/utils/error.utils';
 import { Resolution, Video } from '../types/video';
@@ -72,7 +73,7 @@ const newVideo: Video = {
       return;
     }
 
-    const errors = videoInputDtoValidation(req.body);
+    const errors = videoInputDtoValidationId(req.body);
 
     if (errors.length > 0) {
       res.status(HttpStatus.BadRequest).send(createErrorMessages(errors));
