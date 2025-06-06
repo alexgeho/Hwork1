@@ -23,21 +23,25 @@ exports.videosRouter
     res.status(200).send(video);
 })
     .post('', (req, res) => {
-    var _a, _b, _c, _d;
+    var _a, _b, _c;
     const errors = (0, videoInputDtoValidation_1.videoInputDtoValidation)(req.body);
     if (errors.length > 0) {
         res.status(http_statuses_1.HttpStatus.BadRequest).send((0, error_utils_1.createErrorMessages)(errors));
         return;
     }
+    const createdAtDate = new Date();
+    const publicationDate = req.body.publicationDate && req.body.publicationDate.trim()
+        ? new Date(req.body.publicationDate)
+        : new Date(createdAtDate.getTime() + 24 * 60 * 60 * 1000);
     const newVideo = {
         id: in_memory_db_1.db.videos.length ? in_memory_db_1.db.videos[in_memory_db_1.db.videos.length - 1].id + 1 : 1,
         title: req.body.title,
         author: req.body.author,
         canBeDownloaded: (_a = req.body.canBeDownloaded) !== null && _a !== void 0 ? _a : false,
         minAgeRestriction: (_b = req.body.minAgeRestriction) !== null && _b !== void 0 ? _b : null,
-        createdAt: new Date().toISOString(),
-        publicationDate: (_c = req.body.publicationDate) !== null && _c !== void 0 ? _c : new Date().toISOString(), // + день к createdAt: new Date().toISOString(),
-        availableResolutions: (_d = req.body.availableResolutions) !== null && _d !== void 0 ? _d : [],
+        createdAt: createdAtDate.toISOString(),
+        publicationDate: publicationDate.toISOString(),
+        availableResolutions: (_c = req.body.availableResolutions) !== null && _c !== void 0 ? _c : [],
     };
     in_memory_db_1.db.videos.push(newVideo);
     res.status(http_statuses_1.HttpStatus.Created).send(newVideo);
