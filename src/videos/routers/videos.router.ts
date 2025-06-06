@@ -38,9 +38,8 @@ videosRouter
 
 const createdAtDate = new Date();
 
-const publicationDateString = req.body.publicationDate
-  ? new Date(req.body.publicationDate).toISOString()
-  : new Date(createdAtDate.getTime() + 24 * 60 * 60 * 1000).toISOString();
+const publicationDateString = new Date(createdAtDate.getTime() + 24 * 60 * 60 * 1000).toISOString();
+
   
     
     const newVideo: Video = {
