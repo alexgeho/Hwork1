@@ -36,21 +36,24 @@ videosRouter
       return;
     }
 
-const createdAt = new Date();
-const publicationDate = req.body.publicationDate 
-  ? new Date(req.body.publicationDate) 
-  : new Date(createdAt.getTime() + 24 * 60 * 60 * 1000); // +1 day in ms
+const createdAtDate = new Date();
 
+const publicationDateString = req.body.publicationDate
+  ? new Date(req.body.publicationDate).toISOString()
+  : new Date(createdAtDate.getTime() + 24 * 60 * 60 * 1000).toISOString();
+  
+    
     const newVideo: Video = {
-  id: db.videos.length ? db.videos[db.videos.length - 1].id + 1 : 1,
-  title: req.body.title,
-  author: req.body.author,
-  canBeDownloaded: req.body.canBeDownloaded ?? false,
-  minAgeRestriction: req.body.minAgeRestriction ?? null,
-  createdAt: createdAt.toISOString(),
-  publicationDate: publicationDate.toISOString(),
-  availableResolutions: req.body.availableResolutions ?? [],
-};
+      id: db.videos.length ? db.videos[db.videos.length - 1].id + 1 : 1,
+      title: req.body.title,
+      author: req.body.author,
+      canBeDownloaded: req.body.canBeDownloaded ?? false,
+      minAgeRestriction: req.body.minAgeRestriction ?? null,
+      createdAt: createdAtDate.toISOString(),
+      publicationDate: publicationDateString,  // + день к createdAt: new Date().toISOString(),
+      availableResolutions: req.body.availableResolutions ?? [],
+    };
+
     db.videos.push(newVideo);
     res.status(HttpStatus.Created).send(newVideo);
   })
