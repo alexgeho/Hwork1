@@ -36,7 +36,7 @@ exports.videosRouter
         canBeDownloaded: (_a = req.body.canBeDownloaded) !== null && _a !== void 0 ? _a : false,
         minAgeRestriction: (_b = req.body.minAgeRestriction) !== null && _b !== void 0 ? _b : null,
         createdAt: new Date().toISOString(),
-        publicationDate: (_c = req.body.publicationDate) !== null && _c !== void 0 ? _c : new Date().toISOString(),
+        publicationDate: (_c = req.body.publicationDate) !== null && _c !== void 0 ? _c : new Date().toISOString(), // + день к createdAt: new Date().toISOString(),
         availableResolutions: (_d = req.body.availableResolutions) !== null && _d !== void 0 ? _d : [],
     };
     in_memory_db_1.db.videos.push(newVideo);
