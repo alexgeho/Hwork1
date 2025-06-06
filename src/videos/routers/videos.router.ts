@@ -88,9 +88,7 @@ const newVideo: Video = {
     video.availableResolutions = req.body.availableResolutions;
     video.canBeDownloaded = req.body.canBeDownloaded;
     video.minAgeRestriction = req.body.minAgeRestriction;
-    video.createdAt = req.body.createdAt;
     video.publicationDate = req.body.publicationDate;
-
     res.sendStatus(HttpStatus.NoContent);
   })
 

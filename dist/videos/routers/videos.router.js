@@ -68,7 +68,6 @@ exports.videosRouter
     video.availableResolutions = req.body.availableResolutions;
     video.canBeDownloaded = req.body.canBeDownloaded;
     video.minAgeRestriction = req.body.minAgeRestriction;
-    video.createdAt = req.body.createdAt;
     video.publicationDate = req.body.publicationDate;
     res.sendStatus(http_statuses_1.HttpStatus.NoContent);
 })
