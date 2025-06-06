@@ -38,8 +38,8 @@ export const videoInputDtoValidation = (
     data.author.trim().length > 20
   ) {
     errors.push({
-      field: 'author',
-      message: 'Author must be between 1 and 20 characters',
+      message: 'Any<String>',
+      field: 'author'
     });
   }
 
