@@ -36,11 +36,11 @@ videosRouter
       return;
     }
 
-const createdAtDate = new Date();
+const createdAtDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString();
+ 
 
 const publicationDateString = new Date(createdAtDate.getTime() + 24 * 60 * 60 * 1000).toISOString();
 
-  
     
     const newVideo: Video = {
       id: db.videos.length ? db.videos[db.videos.length - 1].id + 1 : 1,
@@ -49,7 +49,7 @@ const publicationDateString = new Date(createdAtDate.getTime() + 24 * 60 * 60 * 
       canBeDownloaded: req.body.canBeDownloaded ?? false,
       minAgeRestriction: req.body.minAgeRestriction ?? null,
       createdAt: createdAtDate.toISOString(),
-      publicationDate: publicationDateString,  // + день к createdAt: new Date().toISOString(),
+      publicationDate: createdAtDate,  // + день к createdAt: new Date().toISOString(),
       availableResolutions: req.body.availableResolutions ?? [],
     };
 
